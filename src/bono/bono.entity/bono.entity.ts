@@ -1,12 +1,6 @@
 import { ClaseEntity } from 'src/clase/clase.entity/clase.entity';
 import { UsuarioEntity } from 'src/usuario/usuario.entity/usuario.entity';
-import {
-  Column,
-  Double,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class BonoEntity {
@@ -16,7 +10,7 @@ export class BonoEntity {
   @Column()
   monto: number;
   @Column()
-  calificacion: Double;
+  calificacion: number;
   @Column()
   palabraClave: string;
 

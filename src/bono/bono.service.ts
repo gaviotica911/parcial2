@@ -34,4 +34,17 @@ export class BonoService {
     // Eliminar la propuesta si no tiene un proyecto asociado
     await this.bonoRepository.remove(bono);
   }
+  async findBonoByCodigo(codigo: string): Promise<BonoEntity[]> {
+    return await this.bonoRepository.find({
+      where: { clase: { codigo: codigo } },
+      relations: ['clase'],
+    });
+  }
+
+  async findAllBonosByUsuario(userID: string): Promise<BonoEntity[]> {
+    return await this.bonoRepository.find({
+      where: { usuario: { id: userID } },
+      relations: ['usuario'],
+    });
+  }
 }

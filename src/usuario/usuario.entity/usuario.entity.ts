@@ -27,11 +27,11 @@ export class UsuarioEntity {
   @Column()
   rol: string;
 
-  @ManyToOne(() => UsuarioEntity, (subOrdinado) => subOrdinado.jefe)
-  subOrdinados: UsuarioEntity;
+  @OneToMany(() => UsuarioEntity, (subOrdinado) => subOrdinado.jefe)
+  subOrdinados: UsuarioEntity[];
 
-  @OneToMany(() => UsuarioEntity, (jefe) => jefe.subOrdinados)
-  jefe: UsuarioEntity[];
+  @ManyToOne(() => UsuarioEntity, (jefe) => jefe.subOrdinados)
+  jefe: UsuarioEntity;
 
   @OneToMany(() => ClaseEntity, (clase) => clase.usuario)
   clases: ClaseEntity[];

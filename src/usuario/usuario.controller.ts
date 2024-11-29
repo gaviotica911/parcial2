@@ -14,7 +14,7 @@ import { UsuarioDto } from './usuario.dto/usuario.dto';
 import { UsuarioEntity } from './usuario.entity/usuario.entity';
 import { plainToInstance } from 'class-transformer';
 
-@Controller('usuario')
+@Controller('usuarios')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService) {}

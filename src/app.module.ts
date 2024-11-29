@@ -5,10 +5,9 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { ClaseModule } from './clase/clase.module';
 import { BonoModule } from './bono/bono.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClaseBonoService } from './clase-bono/clase-bono.service';
-import { UsuarioBonoService } from './usuario-bono/usuario-bono.service';
-import { UsuarioBonoController } from './usuario-bono/usuario-bono.controller';
-import { ClaseBonoController } from './clase-bono/clase-bono.controller';
+import { UsuarioEntity } from './usuario/usuario.entity/usuario.entity';
+import { ClaseEntity } from './clase/clase.entity/clase.entity';
+import { BonoEntity } from './bono/bono.entity/bono.entity';
 
 @Module({
   imports: [
@@ -22,13 +21,13 @@ import { ClaseBonoController } from './clase-bono/clase-bono.controller';
       username: 'postgres',
       password: 'postgres',
       database: 'bonos',
-      entities: [UsuarioModule, ClaseModule, BonoModule],
+      entities: [UsuarioEntity, ClaseEntity, BonoEntity],
       dropSchema: true,
       synchronize: true,
       keepConnectionAlive: true,
     }),
   ],
-  controllers: [AppController, UsuarioBonoController, ClaseBonoController],
-  providers: [AppService, ClaseBonoService, UsuarioBonoService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
