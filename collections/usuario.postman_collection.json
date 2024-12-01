@@ -1,0 +1,426 @@
+{
+	"info": {
+		"_postman_id": "9186cb65-e507-48e3-aa4a-b6b5f6cdf17c",
+		"name": "usuario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29200318"
+	},
+	"item": [
+		{
+			"name": "crear usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"usuario_id\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"IMAGINE\",\n  \"numeroExtension\": 5678,\n  \"rol\": \"Profesor\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/usuarios",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "crear usuario",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"IMAGINE\",\n  \"numeroExtension\": 5678,\n  \"rol\": \"Profesor\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n     \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"IMAGINE\",\n  \"numeroExtension\": 5678,\n  \"rol\": \"Profesor\"\n\n}"
+				}
+			]
+		},
+		{
+			"name": "crear usuario inv",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"   pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El grupo debe ser uno de los siguientes: TICSW, IMAGINE, COMIT\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"hola\",\n  \"numeroExtension\": 5678,\n  \"rol\": \"Profesor\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/usuarios",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "crear usuario inv",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"hola\",\n  \"numeroExtension\": 5678,\n  \"rol\": \"Profesor\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\": \"El grupo debe ser uno de los siguientes: TICSW, IMAGINE, COMIT\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+				}
+			]
+		},
+		{
+			"name": "obtener un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/usuarios/{{usuario_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios",
+						"{{usuario_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "obtener un usuario",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"numeroCedula\": 1012345678,\n  \"nombre\": \"Juan Pérez\",\n  \"grupoDeInvestigacion\": \"IA Avanzada\",\n  \"numeroExtension\": 5678,\n  \"rol\": \"Decana\",\n\n  \"subOrDinados\": [\n    {\n      \"id\": \"323e4567-e89b-12d3-a456-426614174002\",\n      \"nombre\": \"Carlos López\",\n      \"numeroCedula\": 3012345678,\n      \"grupoDeInvestigacion\": \"IA Básica\",\n      \"numeroExtension\": 7890,\n      \"rol\": \"Investigador\"\n    },\n    {\n      \"id\": \"423e4567-e89b-12d3-a456-426614174003\",\n      \"nombre\": \"Ana Ramírez\",\n      \"numeroCedula\": 4012345678,\n      \"grupoDeInvestigacion\": \"Big Data\",\n      \"numeroExtension\": 4567,\n      \"rol\": \"Investigador\"\n    }\n  ],\n  \"clases\": [\n    {\n      \"id\": \"523e4567-e89b-12d3-a456-426614174004\",\n      \"nombre\": \"Aprendizaje Automático\",\n      \"codigo\": \"AA101\"\n    },\n    {\n      \"id\": \"623e4567-e89b-12d3-a456-426614174005\",\n      \"nombre\": \"Redes Neuronales\",\n      \"codigo\": \"RN102\"\n    }\n  ],\n  \"bonos\": [\n    {\n      \"id\": \"723e4567-e89b-12d3-a456-426614174006\",\n      \"monto\": 1000,\n      \"calificacion\": 4.8,\n      \"palabraClave\": \"Reconocimiento\"\n    },\n    {\n      \"id\": \"823e4567-e89b-12d3-a456-426614174007\",\n      \"monto\": 500,\n      \"calificacion\": 4.5,\n      \"palabraClave\": \"Innovación\"\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios/{{usuario_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{usuario_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"numeroCedula\": 1012345678,\n  \"nombre\": \"Juan Pérez\",\n  \"grupoDeInvestigacion\": \"IA Avanzada\",\n  \"numeroExtension\": 5678,\n  \"rol\": \"Decana\",\n\n  \"subOrDinados\": [\n    {\n      \"id\": \"323e4567-e89b-12d3-a456-426614174002\",\n      \"nombre\": \"Carlos López\",\n      \"numeroCedula\": 3012345678,\n      \"grupoDeInvestigacion\": \"IA Básica\",\n      \"numeroExtension\": 7890,\n      \"rol\": \"Investigador\"\n    },\n    {\n      \"id\": \"423e4567-e89b-12d3-a456-426614174003\",\n      \"nombre\": \"Ana Ramírez\",\n      \"numeroCedula\": 4012345678,\n      \"grupoDeInvestigacion\": \"Big Data\",\n      \"numeroExtension\": 4567,\n      \"rol\": \"Investigador\"\n    }\n  ],\n  \"clases\": [\n    {\n      \"id\": \"523e4567-e89b-12d3-a456-426614174004\",\n      \"nombre\": \"Aprendizaje Automático\",\n      \"codigo\": \"AA101\"\n    },\n    {\n      \"id\": \"623e4567-e89b-12d3-a456-426614174005\",\n      \"nombre\": \"Redes Neuronales\",\n      \"codigo\": \"RN102\"\n    }\n  ],\n  \"bonos\": [\n    {\n      \"id\": \"723e4567-e89b-12d3-a456-426614174006\",\n      \"monto\": 1000,\n      \"calificacion\": 4.8,\n      \"palabraClave\": \"Reconocimiento\"\n    },\n    {\n      \"id\": \"823e4567-e89b-12d3-a456-426614174007\",\n      \"monto\": 500,\n      \"calificacion\": 4.5,\n      \"palabraClave\": \"Innovación\"\n    }\n  ]\n}\n"
+				}
+			]
+		},
+		{
+			"name": "eliminar usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/usuarios/{{usuario_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios",
+						"{{usuario_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "eliminar usuario",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios/{{usuario_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{usuario_id}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "borrar usuario inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"no existe un usuario con el id dado\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/usuarios/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "borrar usuario inexistente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\": \"no existe un usuario con el id dado\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+				}
+			]
+		},
+		{
+			"name": "obtener un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The usuario with the given id was not found\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/usuarios/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"usuarios",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "obtener un usuario que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The usuario with the given id was not found\"\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

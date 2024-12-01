@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "acc8abd4-1faa-4f78-8589-5e8c78a9547b",
+		"name": "bono",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29200318"
+	},
+	"item": [
+		{
+			"name": "crear bono",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"bono_id\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"monto\": 1500,\n  \"calificacion\": 2,\n  \"palabraClave\": \"Reconocimiento al mérito\",\n  \"usuario\": {\n    \"id\": \"{{usuario_id}}\",\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"IMAGINE\",\n    \"numeroExtension\": 5678,\n    \"rol\": \"Profesor\"\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "crear bono",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/bonos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"bonos"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"monto\": 1500,\n  \"calificacion\": 4.5,\n  \"palabraClave\": \"Reconocimiento al mérito\",\n  \"usuario\":{\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"IMAGINE\",\n  \"numeroExtension\": 5678,\n  \"rol\": \"Profesor\"\n\n}\n}\n"
+				}
+			]
+		},
+		{
+			"name": "crear bono invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Status code is 400\", function () {",
+							"   pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"el monot debe ser mayor a 0\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"monto\": -1500,\n  \"calificacion\": 4.6,\n  \"palabraClave\": \"Reconocimiento al mérito\",\n  \"usuario\": {\n    \"id\": \"{{usuario_id}}\",\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"IMAGINE\",\n    \"numeroExtension\": 5678,\n    \"rol\": \"Profesor\"\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/bonos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "crear bono invalido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"monto\": -1500,\n  \"calificacion\": 4.6,\n  \"palabraClave\": \"Reconocimiento al mérito\",\n  \"usuario\": {\n    \"id\": \"{{usuario_id}}\",\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"IMAGINE\",\n    \"numeroExtension\": 5678,\n    \"rol\": \"Profesor\"\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/bonos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"bonos"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\": \"el monot debe ser mayor a 0\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+				}
+			]
+		},
+		{
+			"name": "getAllBonosDelUsuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/bonos/usuarios/{{usuario_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos",
+						"usuarios",
+						"{{usuario_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "getAllBonosDelUsuaio",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios/{{usuario_id}}/bonos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios",
+								"{{usuario_id}}",
+								"bonos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "[{\n    \"numeroCedula\": 12321312,\n    \"nombre\": \"Gabriela\",\n    \"grupoDeInvestigacion\": \"IMAGINE\",\n    \"numeroExtension\": 5678,\n    \"rol\": \"Profesor\",\n    \"id\": \"a9445ebe-7c00-4113-b62d-ac4dffc59839\"\n}]"
+				}
+			]
+		},
+		{
+			"name": "getAllBonosDelUsuarioInexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El usuario  no existe\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/bonos/usuarios/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos",
+						"usuarios",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "getAllBonosDelUsuarioInexistente",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/bonos/usuarios/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"bonos",
+								"usuarios",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\": \"El usuario  no existe\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+				}
+			]
+		},
+		{
+			"name": "borrar un bono",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/bonos/{{bono_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos",
+						"{{bono_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "borrar un bono",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/bonos/{{bono_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"bonos",
+								"{{bono_id}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "borrar bono inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"El bono no existe\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/bonos/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"bonos",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "borrar bono inexistente",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/bonos/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"bonos",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"message\": \"El bono no existe\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
