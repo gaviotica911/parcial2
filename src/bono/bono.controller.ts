@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   UseInterceptors,
@@ -27,10 +29,16 @@ export class BonoController {
     return await this.bonoService.findBonoByCodigo(cod);
   }
 
-  @Get('usuario/:userID')
+  @Get('usuarios/:userID')
   async findAllBonosByUsuario(
     @Param('userID') userID: string,
   ): Promise<BonoEntity[]> {
     return await this.bonoService.findAllBonosByUsuario(userID);
+  }
+
+  @Delete(':bonoId')
+  @HttpCode(204)
+  async delete(@Param('bonoId') bonoId: string) {
+    return await this.bonoService.delete(bonoId);
   }
 }
