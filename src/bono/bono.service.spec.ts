@@ -7,6 +7,7 @@ import { UsuarioEntity } from '../usuario/usuario.entity/usuario.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { faker } from '@faker-js/faker';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
+import { BadRequestException } from '@nestjs/common';
 
 describe('BonoService', () => {
   let service: BonoService;
@@ -153,7 +154,10 @@ describe('BonoService', () => {
       bono.calificacion = 4.5;
       await bonoRepository.save(bono);
 
-      await expect(() => service.delete(bono.id)).rejects.toHaveProperty(
+      await expect(service.delete(bono.id)).rejects.toThrow(
+        BadRequestException,
+      );
+      await expect(service.delete(bono.id)).rejects.toHaveProperty(
         'message',
         'EL bono no puede ser eliminado',
       );
